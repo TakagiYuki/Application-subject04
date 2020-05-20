@@ -29,7 +29,32 @@
 					<td><%= link_to "Destroy",@book, method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
 				<%end%>
 				</tr>
-			</table>
+				<!-- comment投稿 -->
+				<%= form_for [@book, @book_comment] do |f| %>
+				    <div class="row">
+				        <div class="col-sm-12">
+				            <%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに" %>
+				        </div>
+				    </div>
+				    <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+               <% end %>
+        </table>
+        <!-- comment投稿 -->
+            <table>
+            <th>
+              <td>コメント</td>
+			  <td>消去</td>
+			</th>
+
+			<% @book.book_comments.each do |book_comment| %>
+			  <tr>
+			    <td><%= book_comment.comment %></td>
+			      <% if current_user.id == book_comment.user_id %>
+			    <td><%= link_to "Destroy", book_book_comments_path(book_id: @book, id: book_comment.id), method: :delete %></td>
+			      <%end%>
+			  </tr>
+			 </table>
+			<% end %>
       </div>
 	</div>
 </div>

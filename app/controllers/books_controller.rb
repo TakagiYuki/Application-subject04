@@ -4,6 +4,8 @@ before_action :authenticate_user!, only: [:index, :show, :edit]
 before_action :correct_user, only: [:edit, :update]
   def show
   	@book = Book.find(params[:id])
+    @book_comment = BookComment.new #PostComment(id:□, comment:□, user_id□, post_image_id□)
+    
   end
 
   def index
@@ -51,7 +53,6 @@ before_action :correct_user, only: [:edit, :update]
 
   def correct_user
         book = Book.find(params[:id])
-         
         if book.user_id != current_user.id
           flash[:notice] = "権限がありません"
           redirect_to books_path
